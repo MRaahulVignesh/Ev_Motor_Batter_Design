@@ -18,7 +18,7 @@ Standard specifications and physical constants of vehicle
 g = 9.81
 rho = 1.225
 
-class Vehicle:
+class Calculation:
     
     motor_poles = 12
     motor_v_rated = 400
@@ -59,15 +59,6 @@ class Vehicle:
         motor_torque = wheel_torque/self.gear_ratio
         return motor_torque
 
-        
-#No incline
-Car = Vehicle(10000, 6.282, 0.05, 0.8, 0.01, 0.4, 10, 30, 0)
-print(Car.motor(5.55))
-
-#17% incline
-Car.gradeChange(17)
-Car.speedChange(15)
-print(Car.motor(0))
 
 
 
