@@ -15,71 +15,60 @@ import math
 Standard specifications and physical constants of vehicle
 """
 
-v_weight = float(input('Enter vehicle weight '))
-v_width = float(input('Enter vehicle width '))
-v_height = float(input('Enter vehicle height '))
-v_area = float(input('Enter vehicle frontal area '))
-slip = float(input('Enter vehicle slip ratio '))
-Cd = float(input('Enter drag coefficient '))
-Crr = float(input('Enter coefficient of rolling resistance '))
-
 g = 9.81
 rho = 1.225
 
-"""
-Gradability specifications
-"""
+class Vehicle:
+    
+    motor_poles = 12
+    motor_v_rated = 400
+    speed_at_maxtorque = 1000
+    a_time = 10
+    
+    def __init__(self, v_weight, v_area, slip, Cd, Crr, wheel_radius, gear_ratio, v_speed, grade):
+        self.weight = v_weight
+        self.area = v_area
+        self.slip = slip
+        self.Cd = Cd
+        self.Crr = Crr
+        self.wheel_radius = wheel_radius
+        self.gear_ratio = gear_ratio
+        self.speed = v_speed * 5/18
+        self.grade = math.atan(grade/100)
+        
+    def speedChange(self, v_speed):
+        self.speed = v_speed * 5/18
+        
+    def gradeChange(self, grade):
+        self.grade = math.atan(grade/100)
+        
+    def accelerate(self):
+        acceleration = self.speed/self.a_time
+        return acceleration
+        
+    def force(self, v_wind):
+        F_t = (self.weight * self.accelerate() + self.weight * g * self.Crr * math.cos(self.grade) + 0.5 * rho * self.area * self.Cd * pow(self.speed-v_wind, 2) + self.weight * g * math.sin(self.grade))
+        return F_t
+        
+    def power(self, v_wind):
+        return self.force(v_wind) * self.speed
 
-grade_percent = float(input('Enter gradability percent '))
-grade = (math.atan(grade_percent/100))
-v_speed = float(input('Enter grade speed in km/hr '))*5/18
-#time taken to accelerate
-a_time = 10                                             
-acceleration = v_speed/a_time
-v_wind = float(input('Enter wind speed '))
+    def motor(self, v_wind):
+        wheel_speed = math.ceil((self.speed * 60)/(2 * math.pi * self.wheel_radius))
+        wheel_torque = self.force(v_wind) * self.wheel_radius
+        motor_torque = wheel_torque/self.gear_ratio
+        return motor_torque
 
-"""
-Power
-"""
+        
+#No incline
+Car = Vehicle(10000, 6.282, 0.05, 0.8, 0.01, 0.4, 10, 30, 0)
+print(Car.motor(5.55))
 
-F_t = (v_weight * acceleration + v_weight * g * Crr * math.cos(grade) + 0.5 * rho * v_area * Cd * pow(v_speed-v_wind,2) + v_weight * g * math.sin(grade))
-P_t = F_t * v_speed
+#17% incline
+Car.gradeChange(17)
+Car.speedChange(15)
+print(Car.motor(0))
 
-"""
-Motor specifications
-
-Type: PMSM
-Number of stator phases: 3, 6 or 9
-Operating speed: 0-3400 rpm
-"""
-
-m_v_rated = 400
-m_poles = 12
-
-wheel_radius = float(input('Enter wheel radius '))
-wheel_speed = math.ceil((v_speed * 60)/(2 * math.pi * wheel_radius))
-wheel_torque = F_t * wheel_radius
-
-gear_ratio = float(input('Enter gear ratio '))
-speed_at_maxtorque = 1000
-
-motor_torque = wheel_torque/gear_ratio
-
-
-"""
-Battery specifications
-"""
-
-total_capacity = 24
-
-energy_demanded_observation = 0.528
-distance_travelled_observation = 0.793
-energy_per_distance = energy_demanded_observation / distance_travelled_observation
-
-distance_travelled = float(input('Enter distance travelled '))
-energy_required = energy_per_distance * distance_travelled * 1.5 #considering auxillary battery
-
-no_of_modules = math.floor(energy_required / total_capacity)
 
 
 
