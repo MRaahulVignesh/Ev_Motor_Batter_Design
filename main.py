@@ -2,7 +2,7 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
-
+import calculation
 
 class Main:
     def __init__(self, master):
@@ -87,19 +87,27 @@ class Main:
 
     def generate_motor(self):
 
-        v_weight = self.entry_1.get()
-        v_area = self.entry_2.get()
-        slip = self.entry_3.get()
-        Cd = self.entry_4.get()
-        Crr = self.entry_5.get()
-        grade_percent = self.entry_6.get()
-        v_speed = self.entry_7.get()
-        v_wind = self.entry_8.get()
-        wheel_radius = self.entry_9.get()
-        gear_ratio = self.entry_10.get()
+    
 
         ## call the function here
-        answer = 12
+        try:
+            v_weight = float(self.entry_1.get())
+            v_area = float(self.entry_2.get())
+            slip = float(self.entry_3.get())
+            Cd = float(self.entry_4.get())
+            Crr = float(self.entry_5.get())
+            grade_percent = float(self.entry_6.get())
+            v_speed = float(self.entry_7.get())
+            v_wind = float(self.entry_8.get())
+            wheel_radius = float(self.entry_9.get())
+            gear_ratio = float(self.entry_10.get())
+            cal = calculation.Calculation(v_weight, v_area, slip, Cd, Crr, wheel_radius, gear_ratio, v_speed, grade_percent)
+            answer = cal.motor(v_wind)
+            message = "Motor Torque = " + str(answer)
+
+        except Exception as e:
+            message = "Error: Check the variables"
+            print(e)
 
         pop_up = tk.Tk()
         pop_up.title("Motor Specification")
@@ -110,8 +118,7 @@ class Main:
         x = (sw - w)/2
         y = (sh - h)/2
         pop_up.geometry('%dx%d+%d+%d' % (w, h, x, y))
-        message = "Motor Torque = "
-        message = message + str (answer)
+
         m = tk.Label(pop_up, text=message, font="Times 12", width=120, height=5)
         m.pack()
         b = tk.Button(pop_up, text="OK", command=pop_up.destroy, width=10)
