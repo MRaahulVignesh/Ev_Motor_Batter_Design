@@ -25,7 +25,7 @@ class Calculation:
     speed_at_maxtorque = 1000
     a_time = 10
     
-    def __init__(self, v_weight, v_area, slip, Cd, Crr, wheel_radius, gear_ratio, v_speed, grade):
+    def __init__(self, v_weight = 0, v_area = 0, slip = 0, Cd = 0, Crr = 0, wheel_radius = 0, gear_ratio = 0, v_speed = 0, grade = 0):
         self.weight = v_weight
         self.area = v_area
         self.slip = slip
@@ -59,7 +59,7 @@ class Calculation:
         motor_torque = wheel_torque/self.gear_ratio
         return motor_torque
 
-
+    
 
 
 

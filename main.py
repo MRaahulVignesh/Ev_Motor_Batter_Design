@@ -37,7 +37,7 @@ class Main:
         self.entry_1 = tk.Entry(frame_1, font="Times 15 bold", width=10)
         self.entry_1.place(x=200, y=100)
 
-        label_2 = tk.Label(frame_1, text="Vehicel Area :", font="Times 12 ", bg="#f8f8f8", fg="#101010")
+        label_2 = tk.Label(frame_1, text="Vehicle Area :", font="Times 12 ", bg="#f8f8f8", fg="#101010")
         label_2.place(x=70, y=150)
         self.entry_2 = tk.Entry(frame_1, font="Times 15 bold", width=10)
         self.entry_2.place(x=200, y=150)
