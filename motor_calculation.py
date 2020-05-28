@@ -1,20 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon May 25 12:42:58 2020
-
-@author: Akaash Preetham
-"""
-
-"""
-Libraries
-"""
 import math
-
-
-"""
-Standard specifications and physical constants of vehicle
-"""
-
 g = 9.81
 rho = 1.225
 
