@@ -1,18 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed May 27 19:33:57 2020
-
-@author: Akaash Preetham
-"""
-
 import math
-from calculation import Calculation
-'''
-car = Calculation(10000, 6.282, 0.05, 0.8, 0.01, 0.4, 10, 100, 0)
-car.speed
-bus = Calculation()
-bus.speed
-'''
 
 rho = 1.225
 Cd = 0.8
@@ -70,21 +56,5 @@ class Battery:
         return self.energy
         
     def energy_required(self, v_range):
-        return self.energy/self.distance * v_energy * 1.5
+        return self.energy/self.distance * v_range * 1.5
 
-Li = Battery()
-Li.idle(2)
-Li.accelerate(0, 25, 0.115)
-Li.accelerate(25, 45, 0.03)
-Li.cruise(45, 3)
-Li.decelerate(45, 25, 0.023)
-Li.cruise(25, 10)
-Li.decelerate(25, 15, 0.041)
-Li.cruise(15, 3)
-Li.decelerate(15, 0, 0.023)
-Li.energy
-Li.distance
-
-v_range = float(input('Enter driving range '))
-energy_battery = Li.energy/Li.distance * v_range * 1.5
-print(energy_battery)
